@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StudyVault.Domain\StudyVault.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

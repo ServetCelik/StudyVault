@@ -35,5 +35,10 @@ namespace StudyVault.Infrastructure.Services
             await _context.SaveChangesAsync();
             return note.Id;
         }
+
+        public async Task<StudyNote?> GetByIdAsync(Guid id)
+        {
+            return await _context.StudyNotes.FindAsync(id);
+        }
     }
 }
