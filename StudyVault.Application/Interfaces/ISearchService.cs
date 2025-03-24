@@ -1,4 +1,5 @@
-﻿using StudyVault.Domain.Entities;
+﻿using StudyVault.Application.DTOs;
+using StudyVault.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace StudyVault.Application.Interfaces
     public interface ISearchService
     {
         Task IndexNoteAsync(StudyNote note);
-        Task<IEnumerable<StudyNote>> SearchNotesAsync(string query);
+        Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(string query);
     }
 }

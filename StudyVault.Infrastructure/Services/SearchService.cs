@@ -2,6 +2,7 @@
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using StudyVault.Application.DTOs;
 using StudyVault.Application.Interfaces;
 using StudyVault.Domain.Entities;
 using StudyVault.Infrastructure.Helpers;
@@ -58,7 +59,7 @@ namespace StudyVault.Infrastructure.Services
             await _searchClient.MergeOrUploadDocumentsAsync(new[] { doc });
         }
 
-        public async Task<IEnumerable<StudyNote>> SearchNotesAsync(string query)
+        public async Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(string query)
         {
             var options = new SearchOptions
             {
@@ -66,25 +67,25 @@ namespace StudyVault.Infrastructure.Services
             };
 
             var results = await _searchClient.SearchAsync<SearchableStudyNote>(query, options);
-
-            var notes = new List<StudyNote>();
+            var previews = new List<SearchNotePreviewDto>();
 
             await foreach (var result in results.Value.GetResultsAsync())
             {
                 var doc = result.Document;
 
-                notes.Add(new StudyNote(
-                    doc.Title,
-                    doc.Content,
-                    doc.Summary,
-                    doc.Subject,
-                    (List<string>)doc.Tags,
-                    doc.Difficulty,
-                    doc.AuthorName
-                ));
+                previews.Add(new SearchNotePreviewDto
+                {
+                    Id = Guid.Parse(doc.Id),
+                    Title = doc.Title,
+                    Summary = doc.Summary,
+                    Subject = doc.Subject,
+                    Tags = doc.Tags.ToList(),
+                    Difficulty = doc.Difficulty,
+                    CreatedAt = doc.CreatedAt
+                });
             }
 
-            return notes;
+            return previews;
         }
     }
 }
