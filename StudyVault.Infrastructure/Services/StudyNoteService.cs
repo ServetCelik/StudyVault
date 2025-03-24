@@ -14,9 +14,12 @@ namespace StudyVault.Infrastructure.Services
     {
         private readonly StudyVaultDbContext _context;
 
-        public StudyNoteService(StudyVaultDbContext context)
+        private readonly ISearchService _searchService;
+
+        public StudyNoteService(StudyVaultDbContext context, ISearchService searchService)
         {
             _context = context;
+            _searchService = searchService;
         }
 
         public async Task<Guid> CreateAsync(CreateStudyNoteDto dto)
@@ -33,6 +36,8 @@ namespace StudyVault.Infrastructure.Services
 
             _context.StudyNotes.Add(note);
             await _context.SaveChangesAsync();
+
+            await _searchService.IndexNoteAsync(note);
             return note.Id;
         }
 

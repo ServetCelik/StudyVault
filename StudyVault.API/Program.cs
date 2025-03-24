@@ -13,6 +13,15 @@ builder.Services.AddDbContext<StudyVaultDbContext>(options =>
 // 🔧 Register services
 builder.Services.AddScoped<IStudyNoteService, StudyNoteService>();
 
+builder.Services.AddSingleton<ISearchService>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    string searchServiceEndpoint = config["AzureSearch:Endpoint"]!;
+    string searchServiceKey = config["AzureSearch:ApiKey"]!;
+
+    return new SearchService(searchServiceEndpoint, searchServiceKey);
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
