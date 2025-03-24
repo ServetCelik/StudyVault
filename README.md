@@ -41,9 +41,9 @@ StudyVault.sln ├── StudyVault.API ├── StudyVault.Application ├─�
 
 ## 🐳 Getting Started (with Docker)
 
-### 1. Run SQL Server in Docker
-
 ```bash
+1. Run SQL Server in Docker
+
 docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Password1" -p 1433:1433 --name studyvault-sql -d mcr.microsoft.com/mssql/server:2022-latest
 
 2. Configure the connection string
@@ -58,6 +58,7 @@ In StudyVault.API/appsettings.json:
 
 3. Apply the database migrations
 
+dotnet ef migrations add InitialCreate --project StudyVault.Infrastructure --startup-project StudyVault.API
 dotnet ef database update --project StudyVault.Infrastructure --startup-project StudyVault.API
 
 🧪 Run the Application
