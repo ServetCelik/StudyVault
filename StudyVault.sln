@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyVault.Application", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyVault.Infrastructure", "StudyVault.Infrastructure\StudyVault.Infrastructure.csproj", "{27AE0F0C-64B6-4B7C-82DC-59CF40ECE3D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyVault.Domain", "StudyVault.Domain\StudyVault.Domain.csproj", "{DFBE84DC-1D02-46ED-B6E2-0193B83F1F76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{27AE0F0C-64B6-4B7C-82DC-59CF40ECE3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27AE0F0C-64B6-4B7C-82DC-59CF40ECE3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27AE0F0C-64B6-4B7C-82DC-59CF40ECE3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFBE84DC-1D02-46ED-B6E2-0193B83F1F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFBE84DC-1D02-46ED-B6E2-0193B83F1F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFBE84DC-1D02-46ED-B6E2-0193B83F1F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFBE84DC-1D02-46ED-B6E2-0193B83F1F76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
