@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StudyVault.Application\StudyVault.Application.csproj" />
+    <ProjectReference Include="..\StudyVault.Domain\StudyVault.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
