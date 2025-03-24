@@ -1,13 +1,11 @@
 ﻿using Azure;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using StudyVault.Application.Interfaces;
 using StudyVault.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using StudyVault.Infrastructure.Helpers;
 using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudyVault.Infrastructure.Services
 {
@@ -30,7 +28,7 @@ namespace StudyVault.Infrastructure.Services
 
         private async Task EnsureIndexExists()
         {
-            var fields = new FieldBuilder().Build(typeof(SearchableStudyNote));
+            var fields = new Azure.Search.Documents.Indexes.FieldBuilder().Build(typeof(SearchableStudyNote));
 
             var definition = new SearchIndex(IndexName, fields)
             {
@@ -80,7 +78,7 @@ namespace StudyVault.Infrastructure.Services
                     doc.Content,
                     doc.Summary,
                     doc.Subject,
-                    doc.Tags,
+                    (List<string>)doc.Tags,
                     doc.Difficulty,
                     doc.AuthorName
                 ));
