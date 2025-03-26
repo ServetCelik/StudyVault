@@ -18,27 +18,11 @@ namespace StudyVault.Infrastructure.Services
 
         public SearchService(string searchServiceEndpoint, string adminApiKey)
         {
-            Uri serviceEndpoint = new(searchServiceEndpoint);
-            AzureKeyCredential credential = new(adminApiKey);
+            var endpoint = new Uri(searchServiceEndpoint);
+            var credential = new AzureKeyCredential(adminApiKey);
 
-            _indexClient = new SearchIndexClient(serviceEndpoint, credential);
-            _searchClient = new SearchClient(serviceEndpoint, IndexName, credential);
-
-            EnsureIndexExists().Wait();
-        }
-
-        private async Task EnsureIndexExists()
-        {
-            var fields = new Azure.Search.Documents.Indexes.FieldBuilder().Build(typeof(SearchableStudyNote));
-
-            var definition = new SearchIndex(IndexName, fields)
-            {
-                Suggesters = {
-                new SearchSuggester("sg", new[] { "title", "subject", "tags" })
-            }
-            };
-
-            await _indexClient.CreateOrUpdateIndexAsync(definition);
+            _indexClient = new SearchIndexClient(endpoint, credential);
+            _searchClient = new SearchClient(endpoint, IndexName, credential);
         }
 
         public async Task IndexNoteAsync(StudyNote note)

@@ -16,10 +16,11 @@ builder.Services.AddScoped<IStudyNoteService, StudyNoteService>();
 builder.Services.AddSingleton<ISearchService>(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
-    string searchServiceEndpoint = config["AzureSearch:Endpoint"]!;
-    string searchServiceKey = config["AzureSearch:ApiKey"]!;
+    var endpoint = config["AzureSearch:Endpoint"]!;
+    var key = config["AzureSearch:ApiKey"]!;
 
-    return new SearchService(searchServiceEndpoint, searchServiceKey);
+    var service = new SearchService(endpoint, key);
+    return service;
 });
 
 builder.Services.AddControllers();
