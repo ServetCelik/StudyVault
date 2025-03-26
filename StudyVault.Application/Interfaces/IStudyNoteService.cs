@@ -13,5 +13,6 @@ namespace StudyVault.Application.Interfaces
         Task<Guid> CreateAsync(CreateStudyNoteDto dto);
 
         Task<StudyNote?> GetByIdAsync(Guid id);
+        Task BulkCreateAsync(List<StudyNote> notes);
     }
 }

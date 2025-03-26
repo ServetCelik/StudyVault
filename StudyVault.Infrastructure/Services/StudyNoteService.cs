@@ -45,5 +45,16 @@ namespace StudyVault.Infrastructure.Services
         {
             return await _context.StudyNotes.FindAsync(id);
         }
+
+        public async Task BulkCreateAsync(List<StudyNote> notes)
+        {
+            await _context.StudyNotes.AddRangeAsync(notes);
+            await _context.SaveChangesAsync();
+
+            foreach (var note in notes)
+            {
+                await _searchService.IndexNoteAsync(note);
+            }
+        }
     }
 }
