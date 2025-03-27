@@ -30,5 +30,12 @@ namespace StudyVault.API.Controllers
             var results = await _searchService.SearchNotesAsync(q, subject, difficulty, tag, authorName, page, pageSize);
             return Ok(results);
         }
+
+        [HttpGet("facets")]
+        public async Task<IActionResult> GetFacets()
+        {
+            var facets = await _searchService.GetFacetsAsync();
+            return Ok(facets);
+        }
     }
 }

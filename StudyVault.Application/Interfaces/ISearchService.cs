@@ -14,5 +14,7 @@ namespace StudyVault.Application.Interfaces
             string? authorName = null,
             int page = 1,
             int pageSize = 10);
+
+        Task<Dictionary<string, List<FacetValueDto>>> GetFacetsAsync();
     }
 }

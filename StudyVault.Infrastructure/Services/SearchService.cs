@@ -103,5 +103,35 @@ namespace StudyVault.Infrastructure.Services
                 Results = previews
             };
         }
+
+        public async Task<Dictionary<string, List<FacetValueDto>>> GetFacetsAsync()
+        {
+            var options = new SearchOptions
+            {
+                Size = 0 // We don’t want actual documents — just facets
+            };
+
+            options.Facets.Add("difficulty");
+            options.Facets.Add("tags");
+            options.Facets.Add("authorName");
+
+            var response = await _searchClient.SearchAsync<SearchableStudyNote>("*", options);
+            var facetResults = response.Value.Facets;
+
+            var result = new Dictionary<string, List<FacetValueDto>>();
+
+            foreach (var kvp in facetResults)
+            {
+                result[kvp.Key] = kvp.Value
+                    .Select(f => new FacetValueDto
+                    {
+                        Value = f.Value.ToString() ?? "unknown",
+                        Count = f.Count ?? 0
+                    })
+                    .ToList();
+            }
+
+            return result;
+        }
     }
 }
