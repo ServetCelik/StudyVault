@@ -1,16 +1,11 @@
 ﻿using Bogus;
 using StudyVault.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudyVault.Infrastructure.Db
 {
     public static class StudyNoteSeeder
     {
-        public static  List<StudyNote> SeedStudyNote(int count = 50)
+        public static List<StudyNote> SeedStudyNote(int count = 50)
         {
             var faker = new Faker<StudyNote>()
                 .CustomInstantiator(f => new StudyNote(

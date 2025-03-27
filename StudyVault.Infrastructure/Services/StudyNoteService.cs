@@ -2,11 +2,6 @@
 using StudyVault.Application.Interfaces;
 using StudyVault.Domain.Entities;
 using StudyVault.Infrastructure.Db;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudyVault.Infrastructure.Services
 {

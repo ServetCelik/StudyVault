@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudyVault.Domain.Entities
+﻿namespace StudyVault.Domain.Entities
 {
     public class StudyNote
     {

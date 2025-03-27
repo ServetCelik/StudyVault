@@ -1,12 +1,10 @@
 ﻿using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
-using Azure.Search.Documents.Indexes.Models;
 using StudyVault.Application.DTOs;
 using StudyVault.Application.Interfaces;
 using StudyVault.Domain.Entities;
 using StudyVault.Infrastructure.Helpers;
-using System.Reflection.Emit;
 
 namespace StudyVault.Infrastructure.Services
 {
@@ -43,14 +41,38 @@ namespace StudyVault.Infrastructure.Services
             await _searchClient.MergeOrUploadDocumentsAsync(new[] { doc });
         }
 
-        public async Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(string query)
+        public async Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(
+            string? query,
+            string? subject = null,
+            string? difficulty = null,
+            string? tag = null,
+            string? authorName = null)
         {
             var options = new SearchOptions
             {
                 IncludeTotalCount = true
             };
 
-            var results = await _searchClient.SearchAsync<SearchableStudyNote>(query, options);
+            var filters = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                filters.Add($"subject eq '{subject}'");
+
+            if (!string.IsNullOrWhiteSpace(difficulty))
+                filters.Add($"difficulty eq '{difficulty}'");
+
+            if (!string.IsNullOrWhiteSpace(tag))
+                filters.Add($"tags/any(t: t eq '{tag}')");
+
+            if (!string.IsNullOrWhiteSpace(authorName))
+                filters.Add($"authorName eq '{authorName}'");
+
+            if (filters.Any())
+                options.Filter = string.Join(" and ", filters);
+
+            var searchTerm = string.IsNullOrWhiteSpace(query) ? "*" : query;
+
+            var results = await _searchClient.SearchAsync<SearchableStudyNote>(searchTerm, options);
             var previews = new List<SearchNotePreviewDto>();
 
             await foreach (var result in results.Value.GetResultsAsync())

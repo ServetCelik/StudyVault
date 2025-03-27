@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudyVault.Application.Interfaces;
 using StudyVault.Infrastructure.Db;
 
@@ -19,13 +18,15 @@ namespace StudyVault.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] string q)
+        public async Task<IActionResult> Search(
+            [FromQuery] string? q,
+            [FromQuery] string? subject,
+            [FromQuery] string? difficulty,
+            [FromQuery] string? tag,
+            [FromQuery] string? authorName)
         {
-            if (string.IsNullOrWhiteSpace(q))
-                return BadRequest("Query cannot be empty.");
-
-            var previews = await _searchService.SearchNotesAsync(q);
-            return Ok(previews);
+            var results = await _searchService.SearchNotesAsync(q, subject, difficulty, tag, authorName);
+            return Ok(results);
         }
     }
 }

@@ -1,11 +1,4 @@
-﻿using Azure.Search.Documents.Indexes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudyVault.Infrastructure.Helpers
+﻿namespace StudyVault.Infrastructure.Helpers
 {
     using Azure.Search.Documents.Indexes;
     using Azure.Search.Documents.Indexes.Models;
