@@ -6,7 +6,7 @@ namespace StudyVault.Application.Interfaces
     public interface ISearchService
     {
         Task IndexNoteAsync(StudyNote note);
-        Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(
+        Task<PaginatedSearchResult<SearchNotePreviewDto>> SearchNotesAsync(
             string? query = null,
             string? subject = null,
             string? difficulty = null,

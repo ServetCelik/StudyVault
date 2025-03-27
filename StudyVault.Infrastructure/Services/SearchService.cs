@@ -41,7 +41,7 @@ namespace StudyVault.Infrastructure.Services
             await _searchClient.MergeOrUploadDocumentsAsync(new[] { doc });
         }
 
-        public async Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(
+        public async Task<PaginatedSearchResult<SearchNotePreviewDto>> SearchNotesAsync(
             string? query,
             string? subject = null,
             string? difficulty = null,
@@ -76,10 +76,10 @@ namespace StudyVault.Infrastructure.Services
 
             var searchTerm = string.IsNullOrWhiteSpace(query) ? "*" : query;
 
-            var results = await _searchClient.SearchAsync<SearchableStudyNote>(searchTerm, options);
+            var response = await _searchClient.SearchAsync<SearchableStudyNote>(searchTerm, options);
             var previews = new List<SearchNotePreviewDto>();
 
-            await foreach (var result in results.Value.GetResultsAsync())
+            await foreach (var result in response.Value.GetResultsAsync())
             {
                 var doc = result.Document;
 
@@ -95,7 +95,13 @@ namespace StudyVault.Infrastructure.Services
                 });
             }
 
-            return previews;
+            return new PaginatedSearchResult<SearchNotePreviewDto>
+            {
+                TotalCount = response.Value.TotalCount ?? previews.Count,
+                Page = page,
+                PageSize = pageSize,
+                Results = previews
+            };
         }
     }
 }
