@@ -46,10 +46,14 @@ namespace StudyVault.Infrastructure.Services
             string? subject = null,
             string? difficulty = null,
             string? tag = null,
-            string? authorName = null)
+            string? authorName = null,
+            int page = 1,
+            int pageSize = 10)
         {
             var options = new SearchOptions
             {
+                Size = pageSize,
+                Skip = (page - 1) * pageSize,
                 IncludeTotalCount = true
             };
 

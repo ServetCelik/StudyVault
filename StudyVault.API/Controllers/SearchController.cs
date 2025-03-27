@@ -23,9 +23,11 @@ namespace StudyVault.API.Controllers
             [FromQuery] string? subject,
             [FromQuery] string? difficulty,
             [FromQuery] string? tag,
-            [FromQuery] string? authorName)
+            [FromQuery] string? authorName,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var results = await _searchService.SearchNotesAsync(q, subject, difficulty, tag, authorName);
+            var results = await _searchService.SearchNotesAsync(q, subject, difficulty, tag, authorName, page, pageSize);
             return Ok(results);
         }
     }

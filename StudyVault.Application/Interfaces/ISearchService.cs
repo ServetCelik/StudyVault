@@ -7,10 +7,12 @@ namespace StudyVault.Application.Interfaces
     {
         Task IndexNoteAsync(StudyNote note);
         Task<IEnumerable<SearchNotePreviewDto>> SearchNotesAsync(
-            string? query,
+            string? query = null,
             string? subject = null,
             string? difficulty = null,
             string? tag = null,
-            string? authorName = null);
+            string? authorName = null,
+            int page = 1,
+            int pageSize = 10);
     }
 }
